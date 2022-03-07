@@ -1,0 +1,7 @@
+EXPORTS
+	heaphelp
+	chunk
+	
+	WinDbgExtensionDllInit
+	ExtensionApiVersion
+	CheckVersion

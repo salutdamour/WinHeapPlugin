@@ -1,0 +1,10 @@
+﻿  DbgExt.cpp
+D:\SelfLearn\C++Project\WindbgDll\symbol.h(14,21): warning C4091: “typedef ”: 没有声明变量时忽略“_HEAP”的左侧
+  dllmain.cpp
+D:\SelfLearn\C++Project\WindbgDll\symbol.h(14,21): warning C4091: “typedef ”: 没有声明变量时忽略“_HEAP”的左侧
+    正在创建库 D:\SelfLearn\C++Project\WindbgDll\x64\Release\WindbgDll.lib 和对象 D:\SelfLearn\C++Project\WindbgDll\x64\Release\WindbgDll.exp
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 6 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  WindbgDll.vcxproj -> D:\SelfLearn\C++Project\WindbgDll\x64\Release\WindbgDll.dll
