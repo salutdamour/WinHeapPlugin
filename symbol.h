@@ -1,6 +1,18 @@
 #pragma once
 
-typedef struct _HEAP_ENTRY
+struct _HEAP_SEGMENT;
+using HEAP_SEGMENT = _HEAP_SEGMENT;
+using PHEAP_SEGMENT = _HEAP_SEGMENT*;
+
+struct _HEAP;
+using HEAP = _HEAP;
+using PHEAP = _HEAP*;
+
+struct _HEAP_ENTRY;
+using HEAP_ENTRY = _HEAP_ENTRY;
+using PHEAP_ENTRY = _HEAP_ENTRY*;
+
+struct _HEAP_ENTRY
 {
 	ULONG64 PreviousBlockPrivateData;
 	WORD Size;
@@ -9,11 +21,9 @@ typedef struct _HEAP_ENTRY
 	WORD PreviousSize;
 	BYTE SegmentOffset;
 	BYTE UnusedBytes;
-} HEAP_ENTRY, * PHEAP_ENTRY;
+};
 
-typedef struct _HEAP;
-
-typedef struct _HEAP_SEGMENT
+struct _HEAP_SEGMENT
 {
 	_HEAP_ENTRY Entry;
 	ULONG32 SegmentSignature;
@@ -29,10 +39,9 @@ typedef struct _HEAP_SEGMENT
 	WORD SegmentAllocatorBackTraceIndex;
 	WORD Reserved;
 	_LIST_ENTRY UCRSegmentList;
-} HEAP_SEGMENT, * PHEAP_SEGMENT;
+};
 
-
-typedef struct _HEAP
+struct _HEAP
 {
 	_HEAP_SEGMENT Segment;
 	ULONG32 Flags;
@@ -79,4 +88,4 @@ typedef struct _HEAP
 	BYTE FrontEndHeapStatusBitmap[129];
 	BYTE Counters[0x78];
 	BYTE TuningParameters[0x10];
-} HEAP, * PHEAP;
+};

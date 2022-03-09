@@ -1,6 +1,6 @@
 ﻿  DbgExt.cpp
 D:\SelfLearn\C++Project\WindbgDll\symbol.h(14,21): warning C4091: “typedef ”: 没有声明变量时忽略“_HEAP”的左侧
-  dllmain.cpp
+  DllMain.cpp
 D:\SelfLearn\C++Project\WindbgDll\symbol.h(14,21): warning C4091: “typedef ”: 没有声明变量时忽略“_HEAP”的左侧
     正在创建库 D:\SelfLearn\C++Project\WindbgDll\x64\Release\WindbgDll.lib 和对象 D:\SelfLearn\C++Project\WindbgDll\x64\Release\WindbgDll.exp
   正在生成代码

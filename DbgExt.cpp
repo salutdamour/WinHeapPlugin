@@ -37,7 +37,16 @@ DECLARE_API(chunk)
 	*(((PULONG64)&chunk) + 1) ^= cookie;
 	dprintf("   [>] PreviousBlockPrivateData: 0x%I64x\n", chunk.PreviousBlockPrivateData);
 	dprintf("   [>] Size: 0x%x\n", chunk.Size << 4);
-	dprintf("   [>] Flags: 0x%x\n", chunk.Flags);
+
+	if (chunk.Flags & 0x1)
+	{
+		dprintf("   [>] Flags: 0x%x busy\n", chunk.Flags);
+	}
+	else
+	{
+		dprintf("   [>] Flags: 0x%x free\n", chunk.Flags);
+	}
+	
 	dprintf("   [>] PreviousSize: 0x%x\n", chunk.PreviousSize << 4);
 }
 
