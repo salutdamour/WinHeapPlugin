@@ -35,19 +35,33 @@ DECLARE_API(chunk)
 	
 	// decode the chunk header
 	*(((PULONG64)&chunk) + 1) ^= cookie;
-	dprintf("   [>] PreviousBlockPrivateData: 0x%I64x\n", chunk.PreviousBlockPrivateData);
-	dprintf("   [>] Size: 0x%x\n", chunk.Size << 4);
+	dprintf("   [>] PreviousBlockPrivateData: 0x%I64x ", chunk.PreviousBlockPrivateData);
+	CHAR Data[9] = { 0 };
+	memcpy(Data, &chunk.PreviousBlockPrivateData, 8);
+	for (ULONG32 i = 0; i < 8; ++i)
+	{
+		if (Data[i] >= 20 && Data[i] <= 0x7e)
+		{
+			dprintf("%c", Data[i]);
+		}
+		else
+		{
+			dprintf(".");
+		}
+	}
+
+	dprintf("\n   [>] Size: 0x%x(%u)\n", chunk.Size << 4, chunk.Size << 4);
 
 	if (chunk.Flags & 0x1)
 	{
-		dprintf("   [>] Flags: 0x%x busy\n", chunk.Flags);
+		dprintf("   [>] Flags: 0x%x(busy)\n", chunk.Flags);
 	}
 	else
 	{
-		dprintf("   [>] Flags: 0x%x free\n", chunk.Flags);
+		dprintf("   [>] Flags: 0x%x(free)\n", chunk.Flags);
 	}
 	
-	dprintf("   [>] PreviousSize: 0x%x\n", chunk.PreviousSize << 4);
+	dprintf("   [>] PreviousSize: 0x%x(%u)\n", chunk.PreviousSize << 4, chunk.PreviousSize << 4);
 }
 
 // command !heaphelp
