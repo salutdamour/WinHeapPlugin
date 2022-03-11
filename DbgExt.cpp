@@ -54,11 +54,11 @@ DECLARE_API(chunk)
 	}
 	dprintf(" ");
 
-	for (ULONG32 i = 0; i < 8; ++i)
+	for (auto item : Data)
 	{
-		if (Data[i] >= 0x20 && Data[i] <= 0x7e)
+		if (item >= 0x20 && item <= 0x7e)
 		{
-			dprintf("%c", Data[i]);
+			dprintf("%c", item);
 		}
 		else
 		{
