@@ -37,11 +37,26 @@ DECLARE_API(chunk)
 	*(((PULONG64)&chunk) + 1) ^= cookie;
 
 	dprintf("   [>] PreviousBlockPrivateData: 0x%I64x ", chunk.PreviousBlockPrivateData);
-	CHAR Data[9] = { 0 };
+	CHAR Data[8] = { 0 };
 	memcpy(Data, &chunk.PreviousBlockPrivateData, 8);
+	
+	for (auto item : Data)
+	{
+		if (item < 0x10)
+		{
+			dprintf("0%x ", item);
+		}
+		else
+		{
+			dprintf("%x ", item);
+		}
+		
+	}
+	dprintf(" ");
+
 	for (ULONG32 i = 0; i < 8; ++i)
 	{
-		if (Data[i] >= 20 && Data[i] <= 0x7e)
+		if (Data[i] >= 0x20 && Data[i] <= 0x7e)
 		{
 			dprintf("%c", Data[i]);
 		}
@@ -65,6 +80,7 @@ DECLARE_API(chunk)
 	dprintf("   [>] PreviousSize: 0x%x(%u)\n", chunk.PreviousSize << 4, chunk.PreviousSize << 4);
 }
 
+
 // command !freelist
 DECLARE_API(freelist)
 {
@@ -74,7 +90,8 @@ DECLARE_API(freelist)
 		return;
 	}
 
-	ULONG64 list_header = GetExpression(args) + 0x150;
+	CONST ULONG64 list_offset = 0x150;
+	ULONG64 list_header = GetExpression(args) + list_offset;
 	dprintf("[+] list entry head: 0x%I64x\n", list_header);
 
 	LIST_ENTRY64 first_list_entry = { 0 };
@@ -86,7 +103,7 @@ DECLARE_API(freelist)
 		dprintf("[-] failed to read list entry\n");
 		return;
 	}
-	dprintf("   [>] Flink: 0x%I64x ", first_list_entry.Flink);
+	dprintf("   [>] Flink: 0x%I64x ", first_list_entry.Flink - 0x10);
 
 	LIST_ENTRY64 temp_list_entry = { 0 };
 	ULONG64 flink = first_list_entry.Flink;
@@ -99,7 +116,7 @@ DECLARE_API(freelist)
 		{
 			break;
 		}
-		dprintf("-> 0x%I64x ", temp_list_entry.Flink);
+		dprintf("-> 0x%I64x ", temp_list_entry.Flink - 0x10);
 		flink = temp_list_entry.Flink;
 
 		// beautify output
@@ -120,12 +137,13 @@ DECLARE_API(freelist)
 	{
 		dprintf("\n");
 	}
-
-	dprintf("\n   [>] Blink: 0x%I64x ", first_list_entry.Blink);
+	
+	dprintf("\n   [>] Blink: 0x%I64x ", first_list_entry.Blink - 0x10);
 
 	temp_list_entry = { 0 };
 	ULONG64 blink = first_list_entry.Blink;
-	count = 2;
+	count = 2; 
+	flag = FALSE;
 
 	while (ReadMemory(blink, &temp_list_entry, sizeof(LIST_ENTRY64), &bytesRead))
 	{
@@ -133,7 +151,7 @@ DECLARE_API(freelist)
 		{
 			break;
 		}
-		dprintf("-> 0x%I64x ", temp_list_entry.Blink);
+		dprintf("-> 0x%I64x ", temp_list_entry.Blink - 0x10);
 		blink = temp_list_entry.Blink;
 
 		if (count % 6 == 0)

@@ -5,7 +5,7 @@
 
 // Windows 头文件
 #include <windows.h>
-#include <WDBGEXTS.H>
+#include <wdbgexts.h>
 #include <ntverp.h>
 
 // 自定义头文件
