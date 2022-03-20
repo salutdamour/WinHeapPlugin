@@ -26,7 +26,10 @@
     <ClCompile Include="DllMain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DbgExt.cpp">
+    <ClCompile Include="UserHeap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelPool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

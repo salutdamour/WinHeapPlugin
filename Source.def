@@ -1,7 +1,8 @@
 EXPORTS
 	heaphelp
-	chunk
-	freelist
+	hchunk
+	hfreelist
+	pchunk
 	
 	WinDbgExtensionDllInit
 	ExtensionApiVersion
