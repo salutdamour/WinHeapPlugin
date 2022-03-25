@@ -1,47 +1,64 @@
-# !chunk
+# WinHeapPlugin
+
+## usage
+
 ```shell
-1: kd> dq 2a08f180850 2a08f180958
-000002a0`8f180850  00000000`00000000 0800bbe9`d83e623f
-000002a0`8f180860  61616161`61616161 61616161`61616161
-......................................................
-000002a0`8f180950  61616161`61616161 0800bbe8`d83e623f
-1: kd> !chunk 2a08f180950
-[+] cookie: 0xbbf8c93f622f
-[+] chunk:  0x2a08f180950
-   [>] PreviousBlockPrivateData: 0x6161616161616161 aaaaaaaa
-   [>] Size: 0x100(256)
-   [>] Flags: 0x1(busy)
-   [>] PreviousSize: 0x100(256)
-1: kd> !chunk 2a08f180a50
-[+] cookie: 0xbbf8c93f622f
-[+] chunk:  0x2a08f180a50
-   [>] PreviousBlockPrivateData: 0x6161616161616161 aaaaaaaa
-   [>] Size: 0x100(256)
-   [>] Flags: 0x0(free)
-   [>] PreviousSize: 0x100(256)
+.load /path/to/WindbgDll.dll
 ```
 
-# !freelist
+you can use the command  `.chain`  to check if it is loaded.
+
+## !freelist
 
 ```shell
-1: kd> !heap 
+3: kd> !heap
         Heap Address      NT/Segment Heap
 
-         1800ca50000              NT Heap
-         1800c830000              NT Heap
-         1800cca0000              NT Heap
-         1800ca10000              NT Heap
-1: kd> !freelist 1800ca10000
-[+] list entry head: 0x1800ca10150
-   [>] Flink: 0x1800ca11100 -> 0x1800ca166d0 -> 0x1800ca180e0 -> 0x1800ca10150 
+         1ff3fae0000              NT Heap
+         1ff3fa60000              NT Heap
+         1ff3fcf0000              NT Heap
+         1ff40240000              NT Heap
+3: kd> !freelist 1ff3fae0000
+[+] freelist head: 0x1ff3fae0150
+   [>] Flink: 0x1ff3fb1d1e0 -> 0x1ff3fb05f50 -> 0x1ff3fafd970 -> 0x1ff3fb1a690 -> 0x1ff3fae1500 -> 0x1ff3fb286d0 
+           -> 0x1ff3fb1ca20 -> 0x1ff3faf3de0 -> 0x1ff3fb01ff0 -> 0x1ff3fb34a60 -> 0x1ff3fb222e0 -> 0x1ff3fae8210 
+           -> 0x1ff3faf4110 -> 0x1ff3fb1cea0 -> 0x1ff3fb0e120 -> 0x1ff3fae6f40 -> 0x1ff3fae6df0 -> 0x1ff3fae71a0 
+           -> 0x1ff3fb31610 -> 0x1ff3fb1bd00 -> 0x1ff3fb193e0 -> 0x1ff3fae7ac0 -> 0x1ff3fae8b50 -> 0x1ff3fae8920 
+           -> 0x1ff3fb283f0 -> 0x1ff3fb05b20 -> 0x1ff3fb322f0 -> 0x1ff3fb06170 -> 0x1ff3fb19f10 -> 0x1ff3fb057d0 
+           -> 0x1ff3fb1e8a0 -> 0x1ff3fb32700 -> 0x1ff3fae7260 -> 0x1ff3fae40e0 -> 0x1ff3fae84a0 -> 0x1ff3fb36e90 
+           -> 0x1ff3fb33d50 -> 0x1ff3fb16270 -> 0x1ff3fb25b90 -> 0x1ff3fb24840 -> 0x1ff3faf6a10 -> 0x1ff3fb0f080 
+           -> 0x1ff3faffce0 -> 0x1ff3fb2f8b0 -> 0x1ff3fb17eb0 -> 0x1ff3fb06490 -> 0x1ff3fb26710 -> 0x1ff3fb11ab0 
+           -> 0x1ff3fb393a0 
 
-   [>] Blink: 0x1800ca180e0 -> 0x1800ca166d0 -> 0x1800ca11100 -> 0x1800ca10150 
-1: kd> !freelist 1800cca0000
-[+] list entry head: 0x1800cca0150
-   [>] Flink: 0x180113c9f50 -> 0x180113b5a00 -> 0x180113c9060 -> 0x180113c7e70 -> 0x1800ccaeb50 -> 0x180113c80d0 -> 0x180113b3e90 
-           -> 0x180113c8280 -> 0x180113b73d0 -> 0x180113c91a0 -> 0x1800cca0150 
+   [>] Blink: 0x1ff3fb393a0 -> 0x1ff3fb11ab0 -> 0x1ff3fb26710 -> 0x1ff3fb06490 -> 0x1ff3fb17eb0 -> 0x1ff3fb2f8b0 
+           -> 0x1ff3faffce0 -> 0x1ff3fb0f080 -> 0x1ff3faf6a10 -> 0x1ff3fb24840 -> 0x1ff3fb25b90 -> 0x1ff3fb16270 
+           -> 0x1ff3fb33d50 -> 0x1ff3fb36e90 -> 0x1ff3fae84a0 -> 0x1ff3fae40e0 -> 0x1ff3fae7260 -> 0x1ff3fb32700 
+           -> 0x1ff3fb1e8a0 -> 0x1ff3fb057d0 -> 0x1ff3fb19f10 -> 0x1ff3fb06170 -> 0x1ff3fb322f0 -> 0x1ff3fb05b20 
+           -> 0x1ff3fb283f0 -> 0x1ff3fae8920 -> 0x1ff3fae8b50 -> 0x1ff3fae7ac0 -> 0x1ff3fb193e0 -> 0x1ff3fb1bd00 
+           -> 0x1ff3fb31610 -> 0x1ff3fae71a0 -> 0x1ff3fae6df0 -> 0x1ff3fae6f40 -> 0x1ff3fb0e120 -> 0x1ff3fb1cea0 
+           -> 0x1ff3faf4110 -> 0x1ff3fae8210 -> 0x1ff3fb222e0 -> 0x1ff3fb34a60 -> 0x1ff3fb01ff0 -> 0x1ff3faf3de0 
+           -> 0x1ff3fb1ca20 -> 0x1ff3fb286d0 -> 0x1ff3fae1500 -> 0x1ff3fb1a690 -> 0x1ff3fafd970 -> 0x1ff3fb05f50 
+           -> 0x1ff3fb1d1e0 
+```
 
-   [>] Blink: 0x180113c91a0 -> 0x180113b73d0 -> 0x180113c8280 -> 0x180113b3e90 -> 0x180113c80d0 -> 0x1800ccaeb50 -> 0x180113c7e70 
-           -> 0x180113c9060 -> 0x180113b5a00 -> 0x180113c9f50 -> 0x1800cca0150 
+## !hchunk
+
+```shell
+3: kd> !hchunk 0x1ff3fb1d1e0
+[!] To get the right result, you have to use !freelist first
+[+] cookie:  0x7a4962b56ebe
+[+] chunk:  0x1ff3fb1d1e0
+   [>] PreviousBlockPrivateData: 0x0 00 00 00 00 00 00 00 00  ........
+   [>] Size: 0x20(32)
+   [>] Flags: 0x0(free)
+   [>] PreviousSize: 0xb0(176)
+3: kd> !hchunk 0x1ff3fb05f50
+[!] To get the right result, you have to use !freelist first
+[+] cookie:  0x7a4962b56ebe
+[+] chunk:  0x1ff3fb05f50
+   [>] PreviousBlockPrivateData: 0x0 00 00 00 00 00 00 00 00  ........
+   [>] Size: 0x20(32)
+   [>] Flags: 0x0(free)
+   [>] PreviousSize: 0xb0(176)
 ```
 
