@@ -94,10 +94,7 @@ DECLARE_API(freelist)
 		++count;
 	}
 
-	if (!flag)
-	{
-		dprintf("\n");
-	}
+	dprintf("\n");
 
 }
 
